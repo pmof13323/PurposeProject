@@ -6,10 +6,10 @@
 This project aims to build a solution for people to find their purpose
 
 ## Contributors
-
+ 
 - [Parsa Mofrad](https://github.com/pmof13323)
 - [Oscar Elliott](https://github.com/OscarElliott)
 
 
 ## Liscence 
-This project is MIT licensed. View full [License](https://en.wikipedia.org/wiki/MIT_License)
+This project is MIT licensed. View full  [License](https://en.wikipedia.org/wiki/MIT_License)
