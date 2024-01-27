@@ -19,8 +19,9 @@ completion = client.chat.completions.create(
     model="gpt-3.5-turbo",
     messages=[
         {"role": "system", "content": "You are an assessor to a question on a test, your job is to assign a score between 1 and 10 for each of the 40 metrics provided to you for an answer to a test question"},
-        {"role": "user", "content": f"Given the following metrics: {metrics_string}. You are tasked with the job of assessing an applicant who answered the question: {question} with the answer: {answer}. In your response, don't give me any explanations, just provide me with each metric and the answer's score for each."}
+        {"role": "user", "content": f"Given the following metrics: {metrics_string}. You are tasked with the job of assessing an applicant who answered the question: {question} with the answer: {answer}. In your response, don't give me any explanations, just provide me with each metric and the answer's score for each. separate each metric name and number with a : so i can deal with it easily in my code"}
     ]
 )
 
-print(completion.choices[0].message)
+scores = completion.choices[0].message
+
