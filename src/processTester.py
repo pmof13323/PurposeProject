@@ -128,4 +128,22 @@ def careerMatcher(metricsAchieved):
     
     return topCareerDF
 
-print(careerMatcher(topTen))
+# formatting output
+def format_career_output(top_careers_df, descriptions_df):
+    output = []
+    for index, row in top_careers_df.iterrows():
+        career = row['Career Path']
+        match_percentage = f"{row['Match Percentage'] * 100:.2f}%"
+        description = descriptions_df[descriptions_df['Career Path'] == career]['Description'].iloc[0]
+
+        output.append(f"{index + 1}. {career}\nMatch Percentage: {match_percentage}\nDescription: {description}\n")
+
+    return "\n".join(output)
+
+
+careerDesc = pd.read_csv('../assets/CareerPathDescriptions.csv')
+
+# printing to user
+topC = careerMatcher(topTen)
+formattedOutput = format_career_output(topC, careerDesc)
+print(formattedOutput)
