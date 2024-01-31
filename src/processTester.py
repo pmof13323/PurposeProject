@@ -122,10 +122,8 @@ def careerMatcher(metricsAchieved):
         matchPercentage = matches / len(reqMetrics)
         matchScores[career] = matchPercentage
     
-    # Sort the careers by their match percentage in descending order and get the top 3
+    # sorting and converting to df to return
     topCareers = sorted(matchScores.items(), key=lambda item: item[1], reverse=True)[:3]
-    
-    # Convert the top careers to a DataFrame
     topCareerDF = pd.DataFrame(topCareers, columns=['Career Path', 'Match Percentage'])
     
     return topCareerDF
