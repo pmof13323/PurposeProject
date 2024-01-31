@@ -66,4 +66,68 @@ def scoreFrame(chatCompletionMessage):
     return df
 
 results = scoreFrame(scores)
-print(results)
+topTen = results.sort_values(by='Score', ascending=False).head(10)
+
+def careerMatcher(metricsAchieved):
+
+    # formulae for each profession in dictionary variable
+    formulas = {
+        'Medicine': ['Emotional Intelligence', 'Scientific Knowledge', 'Problem-Solving', 'Empathy', 
+                     'Attention to Detail', 'Resilience', 'Teamwork', 'Health and Safety Awareness'],
+        'Engineering': ['Mathematical Thinking', 'Logical Reasoning', 'Technological Proficiency', 
+                        'Problem-Solving', 'Creativity', 'Attention to Detail', 'Analytical Thinking'],
+        'Law': ['Legal Understanding', 'Critical Thinking', 'Public Speaking', 'Ethical Judgment', 
+                'Analytical Thinking', 'Communication Skills', 'Emotional Intelligence'],
+        'Education': ['Pedagogical Skills', 'Communication Skills', 'Emotional Intelligence', 'Creativity', 
+                      'Patience', 'Cultural Awareness', 'Adaptability'],
+        'Business': ['Leadership', 'Financial Acumen', 'Strategic Planning', 'Entrepreneurial Spirit', 
+                     'Negotiation Skills', 'Marketing Insight', 'Networking'],
+        'Arts': ['Artistic Sensibility', 'Creativity', 'Emotional Intelligence', 'Critical Thinking', 
+                 'Public Speaking', 'Adaptability'],
+        'Sciences': ['Scientific Knowledge', 'Research Skills', 'Data Analysis', 'Critical Thinking', 
+                     'Attention to Detail', 'Analytical Thinking'],
+        'Information Technology': ['Technological Proficiency', 'Problem-Solving', 'Logical Reasoning', 
+                                   'Attention to Detail', 'Analytical Thinking', 'Creativity'],
+        'Social Sciences': ['Cultural Awareness', 'Empathy', 'Critical Thinking', 'Research Skills', 
+                            'Communication Skills', 'Historical Knowledge'],
+        'Trades': ['Manual Dexterity', 'Problem-Solving', 'Technical Proficiency', 'Physical Stamina', 
+                   'Attention to Detail', 'Health and Safety Awareness'],
+        'Hospitality and Tourism': ['Customer Service Orientation', 'Communication Skills', 
+                                    'Organizational Skills', 'Cultural Awareness', 'Language Skills', 
+                                    'Adaptability'],
+        'Communication': ['Public Speaking', 'Communication Skills', 'Creativity', 'Networking', 
+                          'Writing Skills'],
+        'Design': ['Creativity', 'Artistic Sensibility', 'Technological Proficiency', 'Attention to Detail', 
+                   'Critical Thinking'],
+        'Agriculture': ['Environmental Consciousness', 'Scientific Knowledge', 'Physical Stamina', 
+                        'Problem-Solving', 'Adaptability'],
+        'Public Service': ['Ethical Judgment', 'Leadership', 'Communication Skills', 'Cultural Awareness', 
+                           'Strategic Planning'],
+        'Finance': ['Financial Acumen', 'Analytical Thinking', 'Attention to Detail', 'Mathematical Thinking', 
+                    'Logical Reasoning'],
+        'Athletics and Sports': ['Physical Stamina', 'Teamwork', 'Leadership', 'Strategic Planning', 
+                                 'Resilience'],
+        'Environmental Careers': ['Environmental Consciousness', 'Scientific Knowledge', 'Research Skills', 
+                                  'Problem-Solving', 'Adaptability'],
+        'Health and Wellness': ['Empathy', 'Health and Safety Awareness', 'Communication Skills', 
+                                'Physical Stamina', 'Emotional Intelligence']
+    }
+    
+    bestMetrics = metricsAchieved['Metric'].tolist()
+    
+    # calculation of matches
+    matchScores = {}
+    for career, reqMetrics in formulas.items():
+        matches = sum(metric in bestMetrics for metric in reqMetrics)
+        matchPercentage = matches / len(reqMetrics)
+        matchScores[career] = matchPercentage
+    
+    # Sort the careers by their match percentage in descending order and get the top 3
+    topCareers = sorted(matchScores.items(), key=lambda item: item[1], reverse=True)[:3]
+    
+    # Convert the top careers to a DataFrame
+    topCareerDF = pd.DataFrame(topCareers, columns=['Career Path', 'Match Percentage'])
+    
+    return topCareerDF
+
+print(careerMatcher(topTen))
