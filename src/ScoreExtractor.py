@@ -83,11 +83,8 @@ try:
 except Exception as e:
     print(e)
 
+# writing to text file
 file_path = '../assets/result.txt'
 
-# check if the file exists to append or create it
 with open(file_path, 'a') as file:
-    if os.stat(file_path).st_size == 0:
-        file.write(results.to_string(index=False))  # write headers and data if file is empty
-    else:
-        file.write(results.to_string(index=False, header=False))  # write data without headers if file is not empty
+    file.write(results.to_string(index=False, header=True)) 
