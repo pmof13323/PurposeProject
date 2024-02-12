@@ -76,5 +76,8 @@ if __name__ == '__main__':
     # some sort of loop which runs search with given querry when request is recived
 
         # use User_Metric_Data as a querry point and run a NN Search
-
+        
         # display / send result 
+    
+    
+    
