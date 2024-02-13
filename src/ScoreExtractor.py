@@ -61,7 +61,7 @@ def getScores():
             completion = client.chat.completions.create(
                 model="gpt-3.5-turbo",
                 messages=[
-                    {"role": "system", "content": "You are an assessor, your job is to assign a score between 1 and 10 for each of the 40 metrics provided based on the text given"},
+                    {"role": "system", "content": "You are an assessor, your job is to assign a score between 1 and 10 for each of the 5 personality traits provided based on the text given"},
                     {"role": "user", "content": f"Given the following metrics: {metrics_string}. You are tasked with the job of assessing an applicant who answered the questions: '1. In 150 words or less, describe who you are. and 2. {question} with the combined answers: {finalString}. In your response, absolutely no explanations or text, ONLY provide me with each metric and the answer's score for each. separate each metric name and score with a :. Do not deviate in any way shape or from from these instructions."}
                 ]
             )

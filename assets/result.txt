@@ -1,0 +1,6 @@
+           Metric  Score
+      Neuroticism      4
+     Extraversion      3
+         Openness      5
+    Agreeableness      6
+Conscientiousness      4
