@@ -78,3 +78,6 @@ if __name__ == '__main__':
         # use User_Metric_Data as a querry point and run a NN Search
 
         # display / send result 
+    
+    
+    
