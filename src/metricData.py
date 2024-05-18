@@ -12,7 +12,7 @@ metrics_list = df['Metric']
 metrics_string = ", ".join(metrics_list)
 
 question = "If you woke up one morning, and all humans on Earth had disappeared out of thin air, what would you do?"
-answer = "I would immediately search for the answer, as this occurrence demands answers, in case there is a way that I can revert this. I would leave my house and make way for the first high human destiny area in search for others (if any are left). Afterwards, I would go to the library and take books on all key human findings throughout history, create a collection across all disciplines and safeguard it, in the case of mass destruction in order to retain human knowledge. I would, using my skills in technology design and build a safe living fortress, with automatic defences in the case of attack from wildlife or more sinister creatures. Here, I would safeguard mankind's knowledge and slowly work to unravel the reason behind human disappearance."
+answer = "I would immediately search for the answer, as this occurrence demands answers, in case there is a way that I can revert this. I would leave my house and make way for the first high human denstiny area in search for others (if any are left). Afterwards, I would go to the library and take books on all key human findings throughout history, create a collection across all disciplines and safeguard it, in the case of mass destruction in order to retain human knowledge. I would, using my skills in technology design and build a safe living fortress, with automatic defences in the case of attack from wildlife or more sinister creatures. Here, I would safeguard mankind's knowledge and slowly work to unravel the reason behind human disappearance."
 # We can later use something like this to test differnet answers:
 # answer = input("Enter your answer: ")
 
@@ -27,3 +27,10 @@ completion = client.chat.completions.create(
 
 scores = completion.choices[0].message
 
+# Convert user scores into a Dataframe so they can be used by nnKDtree
+scores_dict = dict(item.split(": ") for item in scores.split(", "))
+scores_df = pd.DataFrame(list(scores_dict.items()), columns=['Metric', 'Score'])
+scores_df['Score'] = scores_df['Score'].astype(int)
+
+# tempoary for testing -> save DataFrame to CSV file 
+scores_df.to_csv('../assets/UserScores.csv', index=False)
