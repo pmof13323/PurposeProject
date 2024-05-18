@@ -79,7 +79,7 @@ if __name__ == '__main__':
     # brain dead tempoary solution -> search the data set for the label that matches the node
     closest_label = labels[np.where((training_points == closest_point).all(axis=1))[0][0]]
 
-    print("Closest point:", closest_label)
+    print(closest_label)
     
     
     
