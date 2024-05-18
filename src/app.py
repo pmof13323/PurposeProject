@@ -45,7 +45,8 @@ def serve_static(filename):
 
 @app.route('/analyze', methods=['POST'])
 def analyze():
-    #user_answer = request.json['answer']
+    # Uncomment these following two lines in order to process the user answer from the textarea element on site
+    #user_answer = request.json['answer'] 
     #process_answer(user_answer)
 
     # Run nnKDtree.py to get the result
