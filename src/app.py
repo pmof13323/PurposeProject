@@ -1,17 +1,18 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, send_from_directory
 from openai import OpenAI
 import pandas as pd
 import subprocess
 import os
+import json
 from dotenv import load_dotenv
 
 load_dotenv()
-#client = OpenAI()
+client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
 
 app = Flask(__name__)
 
 def process_answer(answer):
-    file_path = '../assets/Metrics.csv'
+    file_path = 'assets/Metrics.csv'
     df = pd.read_csv(file_path)
     df.rename(columns={'Metric ': 'Metric'}, inplace=True)
     metrics_list = df['Metric']
@@ -25,14 +26,16 @@ def process_answer(answer):
         ]
     )
 
-    scores = completion.choices[0].message
+    print(completion)
 
-    scores_dict = dict(item.split(": ") for item in scores.split(", "))
-    scores_df = pd.DataFrame(list(scores_dict.items()), columns=['Metric', 'Score'])
-    scores_df['Score'] = scores_df['Score'].astype(int)
+    scores = completion.choices[0].message.content
 
-    scores_df.to_csv('../assets/UserScores.csv', index=False) # we will need to change this method of passing the file
+    print(scores)
 
+    lines = scores.strip().split("\n")
+    scores_dict = dict(line.split(": ", 1) for line in lines)
+
+    return scores_dict
 
 @app.route('/')
 def index():
@@ -46,11 +49,11 @@ def serve_static(filename):
 @app.route('/analyze', methods=['POST'])
 def analyze():
     # Uncomment these following two lines in order to process the user answer from the textarea element on site
-    #user_answer = request.json['answer'] 
-    #process_answer(user_answer)
+    user_answer = request.json['answer'] 
+    user_scores = process_answer(user_answer)
 
     # Run nnKDtree.py to get the result
-    result = subprocess.check_output(['python', 'src/nnKDtree.py']).decode().strip()
+    result = subprocess.check_output(['python', 'src/nnKDtree.py', json.dumps(user_scores)]).decode().strip()
 
     return jsonify({'result': result})
 

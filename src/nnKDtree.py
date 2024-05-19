@@ -3,6 +3,7 @@ import sys
 import numpy as np
 import pandas as pd
 from node import Node
+import json
 
 # implement function to build Kd Tree
 def buildKdTree(points, depth = 0):
@@ -57,7 +58,6 @@ if __name__ == '__main__':
     # for now the test data can be recived be given as a file 
     # we need to connect it to the rest of the system so the users data can be calculated
     trainingData_file_path = 'assets/TrainingData.xlsx'
-    User_Metric_Data = 'assets/ExampleUserEntry.xlsx'
     # -> to test working data set
     # user_metric_data_file_path = '../assets/UserScores.csv'
 
@@ -70,8 +70,8 @@ if __name__ == '__main__':
     Kd_tree = buildKdTree(training_points, 0) # 0 represents our starting dimension
 
     # Read user metrics data
-    user_df = pd.read_excel(User_Metric_Data, usecols=cols_to_use)
-    user_point = user_df.values[0, 1:] 
+    user_scores = json.loads(sys.argv[1])
+    user_point = [float(value) for value in user_scores.values()]
 
     # Perform nearest neighbor search
     closest_point = nnSearch(Kd_tree, user_point)

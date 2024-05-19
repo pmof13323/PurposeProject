@@ -3,7 +3,7 @@ from openai import OpenAI
 from dotenv import load_dotenv
 
 load_dotenv()
-client = OpenAI()
+client = OpenAI(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)
 
 file_path = '../assets/Metrics.csv'
 df = pd.read_csv(file_path)
